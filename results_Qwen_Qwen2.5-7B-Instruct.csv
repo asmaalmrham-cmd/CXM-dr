@@ -1,0 +1,72 @@
+﻿id,question,type,expected_tool,expected_args,got_type,got_tool,got_args,tool_ok,args_ok,behavior_ok,final_ok,invented,answer,error_type,latency_s
+1,كم فرع نشط؟,رقم,branches_count,"{""status"": ""active""}",tool,branches_count,"{""status"": ""active""}",True,True,,True,0,هناك 4 فروع نشط.,,6.91
+2,كم عدد الفروع عندنا؟,رقم,branches_count,{},tool,branches_count,{},True,True,,True,0,عدد الفروع لدينا هو 5.,,6.58
+3,كم فرع عندنا في جدة؟,رقم,branches_count,"{""city"": ""جدة""}",tool,branches_count,"{""city"": ""جدة""}",True,True,,True,0,هناك فرعين في جدة.,,7.41
+4,كم فرع غير نشط؟,رقم,branches_count,"{""status"": ""inactive""}",tool,branches_count,"{""status"": ""inactive""}",True,True,,True,0,هناك فرع واحد غير نشط.,,7.55
+5,كم فرع عندنا في الرياض؟,رقم,branches_count,"{""city"": ""الرياض""}",tool,branches_count,"{""city"": ""الرياض""}",True,True,,False,0,هناك فرعان في الرياض.,جواب ناقص/غلط,7.48
+6,ما عدد الفروع النشطة في مدينة الدمام؟,رقم,branches_count,"{""city"": ""الدمام"", ""status"": ""active""}",tool,branches_count,"{""city"": ""الدمام"", ""status"": ""active""}",True,True,,False,0,هناك فرع نشط في مدينة الدمام.,جواب ناقص/غلط,7.71
+7,أعطني قائمة الفروع النشطة,رقم,branches_list,"{""status"": ""active""}",tool,branches_list,"{""status"": ""active""}",True,True,,True,0,هناك فروع نشطة وهي: فرع الحمراء في جدة، فرع الروضة في جدة، فرع العليا في الرياض، وفرع الكورنيش في الدمام.,,9.82
+8,وش الفروع اللي في الدمام؟,رقم,branches_list,"{""city"": ""الدمام""}",tool,branches_list,"{""city"": ""الدمام""}",True,True,,True,0,هناك فرع واحد في الدمام وهو فرع الكورنيش.,,7.74
+9,ما هي الخدمات المتوفرة في النظام؟,رقم,services_list,{},tool,services_list,{},True,True,,False,0,هناك الخدمات التالية متاحة في النظام: فتح حساب، التمويل الشخصي، البطاقات، الحوالات، خدمة العملاء الهاتفية، التطبيق الجوال.,جواب ناقص/غلط,8.52
+10,كم خدمة عندنا؟,رقم,services_list,{},tool,services_list,{},True,True,,True,0,هناك 6 خدمات متاحة، وهي: فتح حساب، التمويل الشخصي، البطاقات، الحوالات، خدمة العملاء الهاتفية، التطبيق الجوال.,,8.52
+11,وش أعلى خدمة تقييمًا هالشهر؟,رقم,ratings_service_get,"{""period"": ""month"", ""sort"": ""top"", ""limit"": 1}",tool,ratings_service_get,"{""period"": ""month"", ""sort"": ""top"", ""limit"": 1}",True,True,,True,0,أعلى خدمة تقييمًا هذا الشهر هي فتح حساب ب평جة متوسطة 4.55 بناءً على 42 استجابة.,,10.32
+12,ما هي أقل خدمة تقييمًا هذا الأسبوع؟,رقم,ratings_service_get,"{""period"": ""week"", ""sort"": ""bottom"", ""limit"": 1}",tool,ratings_service_get,"{""period"": ""week"", ""sort"": ""bottom"", ""limit"": 1}",True,True,,True,0,"الخدمة التي لديها أقل تقييم هذا الأسبوع هي ""خدمة العملاء الهاتفية"" مع متوسط تقييم 3.8.",,9.82
+13,وش تقييم الخدمات هالشهر؟,رقم,ratings_service_get,"{""period"": ""month""}",tool,ratings_service_get,"{""period"": ""month"", ""sort"": ""top"", ""limit"": 1}",True,False,,False,0,تقييم خدمة فتح الحساب هذا الشهر هو 4.55 نجوم، وتم التقييم من قبل 42 مستخدمًا.,مدخلات غلط,13.54
+14,كم تقييم خدمة البطاقات آخر 3 شهور؟,رقم,ratings_service_get,"{""period"": ""quarter"", ""service"": ""البطاقات""}",tool,ratings_service_get,"{""period"": ""quarter"", ""service"": ""بطاقات"", ""sort"": ""top"", ""limit"": 1}",True,False,,False,0,لا يوجد بيانات مطابقة لاستفسارك حول تقييمات الخدمة في آخر 3 أشهر.,مدخلات غلط,9.93
+15,أفضل ثلاث خدمات من ناحية التقييم هذا الشهر,رقم,ratings_service_get,"{""period"": ""month"", ""sort"": ""top"", ""limit"": 3}",tool,ratings_service_get,"{""period"": ""month"", ""limit"": 3}",True,False,,False,0,أفضل ثلاث خدمات هذا الشهر من حيث التقييم هي: فتح حساب ب평균 4.55، الحوالات بـ 4.28، والتطبيق الجوال بـ 4.2.,مدخلات غلط,10.1
+16,وش متوسط تقييم التمويل الشخصي هالأسبوع؟,رقم,ratings_service_get,"{""period"": ""week"", ""service"": ""التمويل الشخصي""}",tool,ratings_service_get,"{""period"": ""week"", ""service"": ""تمويل الشخصي"", ""sort"": ""top"", ""limit"": 1}",True,False,,False,0,متوسط التقييم للتمويل الشخصي هذا الأسبوع هو 4.5 بناءً على 8 تعليقات.,مدخلات غلط,9.64
+17,أي فرع أعلى تقييمًا هالشهر؟,رقم,ratings_branch_get,"{""period"": ""month"", ""sort"": ""top"", ""limit"": 1}",tool,ratings_branch_get,"{""period"": ""month"", ""sort"": ""top"", ""limit"": 1}",True,True,,True,0,"النتيجة: [{""branch"": ""فرع الحمراء"", ""avg"": 4.41, ""responses"": 63}]",,10.74
+18,رتب لي الفروع حسب التقييم آخر أسبوع,رقم,ratings_branch_get,"{""period"": ""week"", ""sort"": ""top""}",tool,ratings_branch_get,"{""period"": ""week"", ""sort"": ""top"", ""limit"": 5}",True,False,,False,0,"تم ترتيب الفروع حسب التقييم في الأسبوع الماضي: فرع العليا (4.42), فرع الحمراء (4.38), فرع الكورنيش (4.33), وفرع الروضة (4.06).",مدخلات غلط,11.46
+19,وش أضعف فرع تقييمًا في الرياض هذا الشهر؟,رقم,ratings_branch_get,"{""period"": ""month"", ""city"": ""الرياض"", ""sort"": ""bottom"", ""limit"": 1}",tool,ratings_branch_get,"{""period"": ""month"", ""city"": ""الرياض"", ""sort"": ""bottom"", ""limit"": 1}",True,True,,True,0,فرع العليا هو أضعف فرع تقييمًا في الرياض هذا الشهر، حيث يبلغ متوسط التقييم 4.28 بناءً على 68 استجابة.,,11.15
+20,ما هو أعلى فرع تقييمًا خلال الأسبوع الأخير؟,رقم,ratings_branch_get,"{""period"": ""week"", ""sort"": ""top"", ""limit"": 1}",tool,ratings_branch_get,"{""period"": ""week"", ""sort"": ""top"", ""limit"": 1}",True,True,,True,0,أعلى فرع تقييمًا خلال الأسبوع الأخير هو فرع العليا، حيث يبلغ متوسط التقييم 4.42 بناءً على 19 استجابة.,,10.3
+21,كم متوسط التقييم العام آخر شهر؟,رقم,ratings_overall,"{""period"": ""month""}",tool,ratings_overall,"{""period"": ""month""}",True,True,,True,0,متوسط التقييم العام للآخر شهر هو 4.19 بناءً على 276 تعليقات.,,8.21
+22,وش تقييم فرع الحمراء هالشهر؟,رقم,ratings_overall,"{""period"": ""month"", ""branch"": ""الحمراء""}",tool,ratings_branch_get,"{""period"": ""month""}",False,False,,False,0,,أداة غلط,6.75
+23,كم المتوسط العام لخدمة الحوالات آخر 3 شهور؟,رقم,ratings_overall,"{""period"": ""quarter"", ""service"": ""الحوالات""}",tool,ratings_overall,"{""period"": ""quarter"", ""service"": ""الحوالات""}",True,True,,True,0,"النتيجة: {""avg"": 4.25, ""responses"": 152}",,13.24
+24,كم استبيان جاءنا هذا الأسبوع؟,رقم,responses_count,"{""period"": ""week""}",tool,responses_count,"{""period"": ""week""}",True,True,,True,0,عدد الاستبيانات التي وصلتنا هذا الأسبوع هو 63.,,7.09
+25,كم عدد الردود على الاستبيانات هالشهر؟,رقم,responses_count,"{""period"": ""month""}",tool,responses_count,"{""period"": ""month""}",True,True,,True,0,عدد الردود على الاستبيانات هذا الشهر هو 276.,,7.27
+26,كم رد جانا على فرع العليا آخر شهر؟,رقم,responses_count,"{""period"": ""month"", ""branch"": ""العليا""}",tool,responses_count,"{""period"": ""month"", ""branch"": ""العليا""}",True,True,,True,0,رد جانا على فرع العليا آخر شهر 68 مرة.,,8.06
+27,كم عدد الردود على خدمة التطبيق الجوال آخر ثلاثة شهور؟,رقم,responses_count,"{""period"": ""quarter"", ""service"": ""التطبيق الجوال""}",tool,responses_count,"{""period"": ""quarter"", ""service"": ""تطبيق الجوال""}",True,False,,False,0,عدد الردود على خدمة التطبيق الجوال خلال الثلاثة أشهر الماضية هو 179 ردًا.,مدخلات غلط,8.44
+28,وش توزيع المستجيبين حسب الجنس؟,رقم,demographics_get,"{""dimension"": ""gender""}",tool,demographics_get,"{""dimension"": ""gender"", ""period"": ""week""}",True,False,,False,0,تم توزيع المستجيبين حسب الجنس حيث كان 41 من المستجيب (65.1%) ذكور، و22 من المستجيب (34.9%) إناث.,مدخلات غلط,9.62
+29,وزّع لي المستجيبين حسب الفئة العمرية هالشهر,رقم,demographics_get,"{""dimension"": ""age_group"", ""period"": ""month""}",tool,demographics_get,"{""dimension"": ""age_group"", ""period"": ""month""}",True,True,,True,0,تم توزيع المستجيبين حسب الفئة العمرية هذا الشهر كما يلي: 25-34 سنة شكلوا 29.7% من إجمالي المستجيبين، 35-44 سنة شكلوا 29.7% أيضاً، 18-24 سنة شكلوا 17.4%， 45-54 سنة شكلوا 17.0%， 55 سنة فما فوق شكلوا 6.2% من إجمالي المستجيبين.,,14.83
+30,من أي مدن أغلب المستجيبين؟,رقم,demographics_get,"{""dimension"": ""city""}",tool,demographics_get,"{""dimension"": ""city"", ""period"": ""week""}",True,False,,False,0,غالبية المستجيبين من مدن الرياض والدمام وجدة، حيث يشكلون أكثر من ثلث الاستجابات، تليها المدينة ومكة.,مدخلات غلط,9.28
+31,كم نسبة الإناث بين المستجيبين آخر أسبوع؟,رقم,demographics_get,"{""dimension"": ""gender"", ""period"": ""week""}",tool,demographics_get,"{""dimension"": ""gender"", ""period"": ""week""}",True,True,,False,0,نسبة الإناث بين المستجيبين آخر أسبوع هي 34.9%.,جواب ناقص/غلط,8.37
+32,كيف تغير تقييم الخدمات خلال الشهور الماضية؟,رقم,ratings_trend,{},tool,ratings_service_get,"{""period"": ""month"", ""sort"": ""top"", ""limit"": 0}",False,False,,False,0,,أداة غلط,10.52
+33,وش اتجاه تقييم فرع الروضة؟,رقم,ratings_trend,"{""branch"": ""الروضة""}",tool,ratings_trend,"{""branch"": ""الروضة""}",True,True,,True,0,اتجاه تقييم فرع الروضة يميل للتحسن، حيث أن التقييمات في آخر 30 يوماً هي الأعلى بـ 3.88، تليها الفترة من 30 إلى 60 يوماً مضت بـ 4.06، ثم الفترة من 60 إلى 90 يوماً مضت بـ 3.78.,,12.75
+34,هل تحسن تقييم خدمة فتح حساب؟,رقم,ratings_trend,"{""service"": ""فتح حساب""}",tool,ratings_trend,"{""service"": ""فتح حساب""}",True,True,,True,0,تحسن تقييم خدمة فتح الحساب خلال آخر 30 يومًا بـ 4.55 نجوم، بينما كان التقييم 4.37 و4.15 خلال الفترات التالية.,,10.15
+35,لخّص لي تعليقات آخر أسبوع,تلخيص,comments_get,"{""period"": ""week""}",tool,comments_get,"{""period"": ""week"", ""limit"": 100}",True,False,,False,0,"العملاء راضون عن النظافة والسرعة في الخدمة، لكنهم شكا من عدم وجود رد من خدمة العملاء.
+
+المشاعر: إيجابي 66.7% · سلبي 33.3% · محايد 0.0% (من 3 تعليق)
+أبرز المواضيع: نظافة وسرعة، رد خدمة العملاء",مدخلات غلط,11.56
+36,لخص التعليقات آخر شهر,تلخيص,comments_get,"{""period"": ""month""}",tool,comments_get,"{""period"": ""month"", ""limit"": 100}",True,False,,False,0,"من جملتين: الخدمة سريعة وفرع النظافة جيد، لكن العملاء يشكون من عدم الرد من خدمة العملاء وProblems with the application.
+
+المشاعر: إيجابي 48.3% · سلبي 31.0% · محايد 20.7% (من 29 تعليق)
+أبرز المواضيع: نظافة الفرع، سرعة الخدمة، رد خدمة العملاء",مدخلات غلط,37.38
+37,وش يقول العملاء عن فرع الحمراء هالشهر؟,تلخيص,comments_get,"{""period"": ""month"", ""branch"": ""الحمراء""}",tool,comments_get,"{""period"": ""month"", ""branch"": ""الحمراء"", ""limit"": 100}",True,False,,False,0,"العملاء راضون عن الاحترافية ولكنهم يشكون من عدم وجود جودة استثنائية.
+
+المشاعر: إيجابي 40.0% · سلبي 0.0% · محايد 60.0% (من 5 تعليق)
+أبرز المواضيع: احترافية عالية، جودة عادية",مدخلات غلط,12.36
+38,ما أبرز الشكاوى في التعليقات خلال الأسبوع الماضي؟,تلخيص,comments_get,"{""period"": ""week""}",tool,comments_get,"{""period"": ""week"", ""limit"": 100}",True,False,,False,0,"العملاء راضون عن النظافة والسرعة في الخدمة، لكنهم شكا من عدم وجود رد من خدمة العملاء.
+
+المشاعر: إيجابي 66.7% · سلبي 33.3% · محايد 0.0% (من 3 تعليق)
+أبرز المواضيع: نظافة وسرعة، رد خدمة العملاء",مدخلات غلط,11.56
+39,هل التعليقات إيجابية بشكل عام آخر 3 شهور؟,تلخيص,comments_get,"{""period"": ""quarter""}",tool,ratings_trend,{},False,False,,False,0,,أداة غلط,5.52
+40,لخص لي آراء العملاء عن فرع الكورنيش آخر شهر,تلخيص,comments_get,"{""period"": ""month"", ""branch"": ""الكورنيش""}",tool,comments_get,"{""period"": ""month"", ""branch"": ""الكورنيش"", ""limit"": 100}",True,False,,False,0,"الفرع نظيف ومنظم والخدمة سريعة. الخدمة ممتازة والموظفين متعاونين. المشكلة في التطبيق مستمرة وليست محلولة.
+
+المشاعر: إيجابي 66.7% · سلبي 33.3% · محايد 0.0% (من 6 تعليق)
+أبرز المواضيع: نظافة الفرع، سرعة الخدمة، خدمة الموظفين، Problems with application",مدخلات غلط,14.81
+41,وش أبرز مواضيع التعليقات هذا الشهر؟,تلخيص,comments_get,"{""period"": ""month""}",tool,comments_get,"{""period"": ""month"", ""limit"": 100}",True,False,,False,0,"من جملتين: الخدمة سريعة وفرع النظافة جيد، لكن العملاء يشكون من عدم الرد من خدمة العملاء وProblems with the application.
+
+المشاعر: إيجابي 48.3% · سلبي 31.0% · محايد 20.7% (من 29 تعليق)
+أبرز المواضيع: نظافة الفرع، سرعة الخدمة، رد خدمة العملاء",مدخلات غلط,37.81
+42,حلل مشاعر التعليقات الأسبوع الماضي,تلخيص,comments_get,"{""period"": ""week""}",tool,comments_get,"{""period"": ""week"", ""limit"": 100}",True,False,,False,0,"العملاء راضون عن النظافة والسرعة في الخدمة، لكنهم شكا من عدم وجود رد من خدمة العملاء.
+
+المشاعر: إيجابي 66.7% · سلبي 33.3% · محايد 0.0% (من 3 تعليق)
+أبرز المواضيع: نظافة وسرعة، رد خدمة العملاء",مدخلات غلط,11.98
+43,لخص لي آخر التعليقات,يحتاج توضيح,,{},reply,,{},,,False,False,0,,ما سأل توضيح,7.9
+44,وش تقييم الخدمات؟,يحتاج توضيح,,{},tool,services_list,{},,,False,False,0,,ما سأل توضيح,5.39
+45,كم رد جانا؟,يحتاج توضيح,,{},tool,responses_count,"{""period"": ""week""}",,,False,False,0,,ما سأل توضيح,11.6
+46,وش أعلى فرع تقييمًا؟,يحتاج توضيح,,{},tool,ratings_branch_get,"{""period"": ""week"", ""sort"": ""top"", ""limit"": 1}",,,False,False,0,,ما سأل توضيح,6.86
+47,وش تقييم فرع العليا؟,يحتاج توضيح,,{},tool,ratings_branch_get,"{""period"": ""week"", ""sort"": ""top"", ""limit"": 1}",,,False,False,0,,ما سأل توضيح,7.51
+48,وش أحوال الطقس اليوم؟,برا النطاق,,{},reply,,{},,,True,True,0,,,6.78
+49,اكتب لي قصيدة عن الصيف,برا النطاق,,{},reply,,{},,,True,True,0,,,7.16
+50,كم سعر الدولار اليوم؟,برا النطاق,,{},reply,,{},,,True,True,0,,,7.09
