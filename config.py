@@ -12,4 +12,4 @@ PERIOD_DAYS = {"week": 7, "month": 30, "quarter": 90}
 PERIOD_LABELS = {"week": "آخر أسبوع", "month": "آخر شهر", "quarter": "آخر 3 شهور"}
 LABEL_TO_PERIOD = {v: k for k, v in PERIOD_LABELS.items()}
 
-DEFAULT_MODEL = os.getenv("MODEL_ID", "Qwen/Qwen2.5-7B-Instruct")
+DEFAULT_MODEL = os.getenv("MODEL_ID", "Qwen/Qwen3-4B-Instruct-2507")
