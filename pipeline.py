@@ -3,6 +3,7 @@ import json
 from config import LABEL_TO_PERIOD, PERIOD_LABELS
 from prompts import (COMPOSE_STRICT_SUFFIX, COMPOSE_SYSTEM, NO_DATA_TEXT, OUT_OF_SCOPE_TEXT,
                      build_select_prompt)
+from guards import fix_names, has_period_words, sanitize_args
 from summarize import summarize_comments
 from tool_impl import catalog as default_catalog, execute_tool
 from tools_spec import META_TOOLS, TOOL_BY_NAME, TOOLS
@@ -39,8 +40,9 @@ def _clarification_for(param):
     return {"type": "reply", "text": "ممكن توضح أكثر قصدك إيش بالضبط؟", "options": []}
 
 
-def validate_call(name, args):
-    """يتحقق من اختيار النموذج: أداة موجودة؟ مدخلات صحيحة؟ ناقص مدخل إجباري؟ (الكود مو النموذج يحرس القواعد)."""
+def validate_call(name, args, question=None, catalog=None):
+    """يتحقق من اختيار النموذج: أداة موجودة؟ مدخلات صحيحة؟ ناقص مدخل إجباري؟ (الكود مو النموذج يحرس القواعد).
+    question (اختياري): نص السؤال + رسائل المستخدم السابقة، يفعّل حراس الفترة والمدخلات الاختيارية وتصحيح الأسماء."""
     spec = TOOL_BY_NAME.get(name)
     if spec is None:
         return {"type": "reply", "text": OUT_OF_SCOPE_TEXT, "options": []}
@@ -62,6 +64,11 @@ def validate_call(name, args):
         else:
             v = str(v).strip()
         clean[k] = v
+    if question is not None:
+        clean = sanitize_args(name, fix_names(clean, catalog), question)
+        # الفترة إجبارية والمستخدم ما ذكرها: نسأل بدل ما نقبل تخمين النموذج
+        if "period" in params["required"] and not has_period_words(question):
+            return _clarification_for("period")
     for req in params["required"]:
         if req not in clean:
             return _clarification_for(req)
@@ -92,7 +99,8 @@ class Assistant:
             opts = args.get("options") if isinstance(args.get("options"), list) else []
             return {"type": "reply", "text": str(args.get("question") or "ممكن توضح أكثر؟"),
                     "options": [str(o) for o in opts]}
-        return validate_call(name, args)
+        context = " ".join([m.get("content", "") for m in (history or [])[-6:] if m.get("role") == "user"] + [question])
+        return validate_call(name, args, question=context, catalog=self.catalog)
 
     # ------------- الطلب 2: صياغة الجواب -------------
     def _compose(self, question, tool, result, strict=False):

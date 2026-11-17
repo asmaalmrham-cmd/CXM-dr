@@ -22,12 +22,13 @@ NUM_WORDS = {0: ["صفر", "لا يوجد", "لا توجد", "ما فيه", "م�
 KEY_FACTS = {
     "branches_count": lambda r: [r["count"]],
     "branches_list": lambda r: [b["name"] for b in r["branches"]],
-    "services_list": lambda r: [r["count"]],
+    "services_list": lambda r: [(r["services"], r["count"])],  # كل أسماء الخدمات، أو العدد
     "ratings_service_get": lambda r: [r[0]["service"], r[0]["avg"]],
     "ratings_branch_get": lambda r: [r[0]["branch"], r[0]["avg"]],
     "ratings_overall": lambda r: [r["avg"]],
     "responses_count": lambda r: [r["count"]],
-    "demographics_get": lambda r: [r["distribution"][0]["pct"]],
+    # أي نسبة من التوزيع (سؤال عن فئة وحدة مثل الإناث)، أو ذكر كل المجموعات (سؤال عن التوزيع كامل)
+    "demographics_get": lambda r: [tuple([d["pct"] for d in r["distribution"]] + [[d["group"] for d in r["distribution"]]])],
     "ratings_trend": lambda r: [r[0]["avg"]],
     "comments_get": lambda r: [],
 }
@@ -38,6 +39,13 @@ def _plain(s):
 
 
 def _present(fact, answer):
+    """tuple = أي واحد منها يكفي، list = كلها لازم تظهر."""
+    if isinstance(fact, tuple):
+        return any(_present(f, answer) for f in fact)
+    if isinstance(fact, list):
+        return all(_present(f, answer) for f in fact)
+    if fact == 1 and not isinstance(fact, float) and answer.strip() and not numbers_in(answer):
+        return True  # "هناك فرع غير نشط": المفرد بدون رقم يعني واحد (الأرقام المخترعة تنفحص لحالها)
     if isinstance(fact, float):
         return any(abs(n - fact) < 1e-9 for n in numbers_in(answer))
     if isinstance(fact, int):
