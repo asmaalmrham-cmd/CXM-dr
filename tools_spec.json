@@ -1,0 +1,294 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "branches_count",
+      "description": "تحسب عدد الفروع. يمكن تحديد المدينة أو الحالة (نشط/غير نشط). للأسئلة من نوع: كم فرع؟",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string",
+            "description": "اسم المدينة بالعربي مثل: جدة، الرياض، الدمام"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive"
+            ],
+            "description": "active = نشط، inactive = غير نشط"
+          }
+        },
+        "required": []
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "branches_list",
+      "description": "ترجع قائمة الفروع بأسمائها ومدنها وحالتها. للأسئلة من نوع: وش الفروع؟ أعطني قائمة الفروع.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string",
+            "description": "اسم المدينة بالعربي مثل: جدة، الرياض، الدمام"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive"
+            ],
+            "description": "active = نشط، inactive = غير نشط"
+          }
+        },
+        "required": []
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "services_list",
+      "description": "ترجع قائمة الخدمات المتوفرة في النظام وعددها. للأسئلة من نوع: وش الخدمات؟ كم خدمة عندنا؟",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "ratings_service_get",
+      "description": "ترجع متوسط تقييم كل خدمة خلال فترة، ويمكن ترتيبها (الأعلى/الأقل) أو تحديد خدمة وحدة. للأسئلة عن تقييم الخدمات وأعلى/أقل خدمة تقييمًا.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string",
+            "enum": [
+              "week",
+              "month",
+              "quarter"
+            ],
+            "description": "الفترة: week = آخر 7 أيام، month = آخر 30 يوم، quarter = آخر 3 شهور"
+          },
+          "service": {
+            "type": "string",
+            "description": "اسم الخدمة بالعربي كما هو في النظام"
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "top",
+              "bottom"
+            ],
+            "description": "top = الأعلى تقييمًا أولًا، bottom = الأقل تقييمًا أولًا"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "عدد النتائج المطلوب (1 لأعلى/أقل واحد، 3 لأفضل ثلاثة...)"
+          }
+        },
+        "required": [
+          "period"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "ratings_branch_get",
+      "description": "ترجع متوسط تقييم كل فرع خلال فترة، ويمكن ترتيبها أو تحديد مدينة. للأسئلة عن أعلى/أقل فرع تقييمًا وترتيب الفروع.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string",
+            "enum": [
+              "week",
+              "month",
+              "quarter"
+            ],
+            "description": "الفترة: week = آخر 7 أيام، month = آخر 30 يوم، quarter = آخر 3 شهور"
+          },
+          "city": {
+            "type": "string",
+            "description": "اسم المدينة بالعربي مثل: جدة، الرياض، الدمام"
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "top",
+              "bottom"
+            ],
+            "description": "top = الأعلى تقييمًا أولًا، bottom = الأقل تقييمًا أولًا"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "عدد النتائج المطلوب (1 لأعلى/أقل واحد، 3 لأفضل ثلاثة...)"
+          }
+        },
+        "required": [
+          "period"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "ratings_overall",
+      "description": "ترجع متوسط التقييم العام (رقم واحد) خلال فترة، ويمكن حصره بفرع معين أو خدمة معينة. للأسئلة من نوع: كم متوسط التقييم العام؟ وش تقييم فرع كذا؟",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string",
+            "enum": [
+              "week",
+              "month",
+              "quarter"
+            ],
+            "description": "الفترة: week = آخر 7 أيام، month = آخر 30 يوم، quarter = آخر 3 شهور"
+          },
+          "branch": {
+            "type": "string",
+            "description": "اسم الفرع بالعربي بدون كلمة (فرع) مثل: الحمراء"
+          },
+          "service": {
+            "type": "string",
+            "description": "اسم الخدمة بالعربي كما هو في النظام"
+          }
+        },
+        "required": [
+          "period"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "responses_count",
+      "description": "تحسب عدد ردود الاستبيانات خلال فترة، ويمكن حصرها بفرع أو خدمة. للأسئلة عن عدد الاستبيانات/الردود.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string",
+            "enum": [
+              "week",
+              "month",
+              "quarter"
+            ],
+            "description": "الفترة: week = آخر 7 أيام، month = آخر 30 يوم، quarter = آخر 3 شهور"
+          },
+          "branch": {
+            "type": "string",
+            "description": "اسم الفرع بالعربي بدون كلمة (فرع) مثل: الحمراء"
+          },
+          "service": {
+            "type": "string",
+            "description": "اسم الخدمة بالعربي كما هو في النظام"
+          }
+        },
+        "required": [
+          "period"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "demographics_get",
+      "description": "ترجع التوزيع الديموغرافي للمستجيبين (العدد والنسبة) حسب العمر أو الجنس أو المدينة، ويمكن تحديد فترة.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "dimension": {
+            "type": "string",
+            "enum": [
+              "age_group",
+              "gender",
+              "city"
+            ],
+            "description": "age_group = الفئة العمرية، gender = الجنس، city = المدينة"
+          },
+          "period": {
+            "type": "string",
+            "enum": [
+              "week",
+              "month",
+              "quarter"
+            ],
+            "description": "الفترة: week = آخر 7 أيام، month = آخر 30 يوم، quarter = آخر 3 شهور"
+          }
+        },
+        "required": [
+          "dimension"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "ratings_trend",
+      "description": "ترجع تغير متوسط التقييم عبر آخر 3 شهور (3 فترات)، ويمكن حصرها بخدمة أو فرع. للأسئلة عن التحسن أو التراجع أو الاتجاه.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "service": {
+            "type": "string",
+            "description": "اسم الخدمة بالعربي كما هو في النظام"
+          },
+          "branch": {
+            "type": "string",
+            "description": "اسم الفرع بالعربي بدون كلمة (فرع) مثل: الحمراء"
+          }
+        },
+        "required": []
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "comments_get",
+      "description": "ترجع نصوص تعليقات العملاء خلال فترة، ويمكن حصرها بفرع. تُستخدم لتلخيص التعليقات وتحليل المشاعر وأبرز الشكاوى والمواضيع.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string",
+            "enum": [
+              "week",
+              "month",
+              "quarter"
+            ],
+            "description": "الفترة: week = آخر 7 أيام، month = آخر 30 يوم، quarter = آخر 3 شهور"
+          },
+          "branch": {
+            "type": "string",
+            "description": "اسم الفرع بالعربي بدون كلمة (فرع) مثل: الحمراء"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "أقصى عدد تعليقات (افتراضي 100)"
+          }
+        },
+        "required": [
+          "period"
+        ]
+      }
+    }
+  }
+]
